@@ -446,7 +446,6 @@ export default class App extends React.Component {
                         sites={this.state.sites}
                         speakers={this.state.speakers}
                         loggedUser={this.state.loggedUser} />
-
             </View>
           </Container>
         );
