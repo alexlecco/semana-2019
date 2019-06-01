@@ -66,7 +66,7 @@ export default class MakeTalkQuestion extends Component {
         <View style={styles.container}>
           <Text style={[styles.centerText, { fontSize: 20, marginBottom: 10, marginTop: 7 }]}>{ this.props.talk.title } </Text>
           <Text style={styles.centerText}>
-            Estás por escribir una pregunta que aparecerá en pantalla junto a tu nombre de usuario, queremos escucharte:
+            Estás por escribir una pregunta que aparecerá en pantalla gigante <Text style={styles.boldText}>junto a tu nombre de usuario</Text>, queremos escucharte:
           </Text>
 
           <Content padder>
@@ -110,5 +110,8 @@ const styles = StyleSheet.create({
   },
   centerText: {
     textAlign: 'center',
+  },
+  boldText: {
+    fontWeight: 'bold',
   }
 })
