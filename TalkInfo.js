@@ -293,7 +293,26 @@ export default class TalkInfo extends Component {
               Compartir
             </Text>
           </Button>
+          <Button transparent full primary onPress={() => {}} >
+            <Text style={{color: '#BD005E'}}>
+              Ver las preguntas de la charla
+            </Text>
+          </Button>
         </Content>
+
+        {
+          this.state.buttonText == 'Ya no me interesa' ?
+          (
+          <Button full style={styles.buttonColor}
+                  onPress={() => {}} >
+            <Text>
+              Hacer una pregunta
+            </Text>
+          </Button>
+          ) : <View />
+        }
+        
+        <View style={styles.buttonsSeparator}></View>
         <Button full style={this.state.buttonText == 'Me interesa' ? styles.buttonColor : false}
                 full primary transparent={this.state.buttonText == 'Ya no me interesa' ? true : false}
                 onPress={() => this.addOrRemoveUserTalk(this.props.loggedUser, this.props.talk)} >
@@ -387,5 +406,9 @@ const styles = StyleSheet.create({
   },
   buttonColor: {
     backgroundColor: '#BD005E',
+  },
+  buttonsSeparator: {
+    backgroundColor: 'white',
+    height: 10,
   }
 });
