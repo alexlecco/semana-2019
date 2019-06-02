@@ -17,11 +17,19 @@ export default class TalkQuestion extends Component {
     let space = '             ';
 
 		return(
-			<TouchableWithoutFeedback onPress={() => {}} >
-
-				<View><Text>Holis</Text></View>
-
-			</TouchableWithoutFeedback>
+			<View style={styles.TalkCardContainer}>
+					<View style={styles.TalCardColumn}>
+						<View style={styles.TalkTitleContainer}>
+							<Text style={styles.TalkText}>{this.props.talkQuestion.body}</Text>
+						</View>
+						<View style={styles.TalkSiteContainer}>
+							<Text style={[styles.TalkSiteText]}>
+								{this.props.talkQuestion.talk}
+								{this.props.talkQuestion.user}
+							</Text>
+						</View>
+					</View>
+				</View>
 		);
 	}
 }

@@ -1,7 +1,7 @@
 'use strict'
 
 import React, { Component } from 'react';
-import { View, StyleSheet, TextInput, } from 'react-native';
+import { View, StyleSheet, TextInput, ListView, } from 'react-native';
 import {
   Container,
   Header,
@@ -31,10 +31,34 @@ export default class TalkQuestionsContainer extends Component {
   constructor(props){
     super(props);
     this.state = {
-      talkQuestions: [],
+      talkQuestions: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
     }
     this.loggedUser = this.props.loggedUser;
     this.talk = this.props.talk;
+    this.talkQuestionsRef = firebaseApp.database().ref().child('questions');
+  }
+
+  componentDidMount() {
+    this.listenForTalkQuestions(this.talkQuestionsRef);
+  }
+
+  listenForTalkQuestions(talkQuestionsRef) {
+    talkQuestionsRef.on('value', (snap) => {
+      var talkQuestions = [];
+
+      snap.forEach((child) => {
+        talkQuestions.push({
+          body: child.val().body,
+          talk: child.val().talk,
+          user: child.val().user,
+          _key: child.key,
+        });
+      });
+
+      this.setState({
+        talkQuestions: this.state.talkQuestions.cloneWithRows(talkQuestions),
+      });
+    });
   }
 
   readQuestions(talks, userTalks) {
@@ -80,6 +104,8 @@ export default class TalkQuestionsContainer extends Component {
   }
 
   render() {
+    const message = 'Aún no hay preguntas registradas en esta charla';
+
     return(
       <Container>
         <Header style={{backgroundColor: '#BD005E'}}>
@@ -93,10 +119,22 @@ export default class TalkQuestionsContainer extends Component {
           </Body>
         </Header>
         <View style={styles.container}>
-          <Text style={[styles.centerText, { fontSize: 20, marginBottom: 10, marginTop: 7 }]}> No se </Text>
+          <Text style={[styles.centerText, { fontSize: 20, marginBottom: 10, marginTop: 7 }]}> { this.props.talk.title } </Text>
 
           <Content padder>
-            <TalkQuestion />
+          {
+            this.state.talkQuestions.length !== 0
+              ?
+              <ListView
+                dataSource={this.state.talkQuestions}
+                renderRow={(talkQuestion) => (<TalkQuestion talkQuestion={talkQuestion} />) }
+                enableEmptySections={true}
+                renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
+              :
+              <View style={styles.empty}>
+                <Text style={styles.emptyText}> { message } </Text>
+              </View>
+          }
           </Content>
         </View>
       </Container>
@@ -124,5 +162,19 @@ const styles = StyleSheet.create({
   },
   boldText: {
     fontWeight: 'bold',
-  }
+  },
+  empty: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    marginTop: 50,
+    marginLeft: 50,
+    marginRight: 50,
+  },
+  emptyText: {
+    textAlign: 'center',
+    color: '#575757',
+  },
 })
