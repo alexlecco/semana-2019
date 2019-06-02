@@ -1,7 +1,7 @@
 'use strict'
 
 import React, { Component } from 'react';
-import { View, StyleSheet, TextInput, } from 'react-native';
+import { View, StyleSheet, TextInput, Alert, } from 'react-native';
 import {
   Container,
   Header,
@@ -36,14 +36,19 @@ export default class MakeTalkQuestion extends Component {
   }
 
   sendTalkQuestion() {
-    firebaseApp.database().ref().child('questions').push({
-      body: this.state.body,
-      user: this.props.loggedUser.uid,
-      talk: this.props.talk.id,
-    }).key;
-
-    this.setState({ body: '' });
-    this.props.hideMakeTalkQuestions();
+    try {
+      firebaseApp.database().ref().child('questions').push({
+        body: this.state.body,
+        user: this.props.loggedUser.uid,
+        talk: this.props.talk.id,
+      }).key;
+  
+      this.setState({ body: '' });
+      Alert.alert('¡Gracias por tu participación!', 'Tu pregunta se envió correctamente');
+      this.props.hideMakeTalkQuestions();
+    } catch ({ message }) {
+      alert(`Se produjo un error: ${message}`);
+    }
   }
 
   getObjectOfArray(array, index) {
