@@ -11,7 +11,7 @@ export default class TalkQuestion extends Component {
     }
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		this.getUserName(this.props.users);
 	}
 
@@ -29,24 +29,23 @@ export default class TalkQuestion extends Component {
 		this.setState({ user: localUser });
 	}
 
-	getObjectOfArray(array, index) {
-    return array[index] = array[index] || {};
-	}
-
 	render() {
-    let users = this.props.users;
-
 		return(
-			<View style={styles.TalkCardContainer}>
-					<View style={styles.TalCardColumn}>
-						<View style={styles.TalkTitleContainer}>
-							<Text style={styles.TalkText}>{this.props.talkQuestion.body}</Text>
-						</View>
-						<View style={styles.TalkSiteContainer}>
-							<Text style={[styles.TalkSiteText]}>
+			<View style={styles.questionWrapper}>
+					<View style={styles.questionContainer}>
+
+						<View style={styles.questionBodyContainer}>
+              <Text style={styles.questionBody}>
+								{this.props.talkQuestion.body}
+							</Text>
+            </View>
+
+						<View style={styles.questionUserNameContainer}>
+							<Text style={styles.questionUserName}>
 								{ this.state.user }
 							</Text>
 						</View>
+
 					</View>
 				</View>
 		);
@@ -54,37 +53,35 @@ export default class TalkQuestion extends Component {
 }
 
 const styles = StyleSheet.create({
-  TalkCardContainer: {
+  questionWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-	TalCardColumn: {
-    flexDirection: 'column',
+	questionContainer: {
+		flexDirection: 'column',
+		marginTop: 20,
+		marginBottom: 30,
 	},
-	TalkTimeContainer: {
-		margin: 10,
-  },
-	TalkTitleContainer: {
-		paddingTop: 10,
-		paddingBottom: 10,
-		paddingRight: 10,
-		marginTop: 10,
-		marginRight: 10,
+	questionUserNameContainer: {
 		flexWrap: 'wrap',
-		flexDirection: 'row',
-		width: Dimensions.get('window').width - 82,
-	},
-	TalkSiteContainer: {
-		flexWrap: 'wrap',
+		textAlign: 'right',
 		paddingBottom: 10,
 		flexDirection: 'row',
 		width: Dimensions.get('window').width - 82,
 	},
-	TalkSiteText: {
+	questionUserName: {
 		fontSize: 13,
+		textAlign: 'center',
+		color: '#ffaf19',
+		flexWrap: 'wrap',		
 	},
-	TalkText: {
+	questionBodyContainer: {
+		flexWrap: 'wrap',
+		textAlign: 'center',
+	},
+  questionBody: {
+		textAlign: 'center',
 		fontSize: 17,
-    color: '#4f4f4f',
+    color: '#d2d3d5',
 	},
 });
