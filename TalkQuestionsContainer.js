@@ -39,64 +39,28 @@ export default class TalkQuestionsContainer extends Component {
   }
 
   componentDidMount() {
-    this.listenForTalkQuestions(this.talkQuestionsRef);
+    this.listenForTalkQuestions(this.talkQuestionsRef, this.props.talk);
   }
 
-  listenForTalkQuestions(talkQuestionsRef) {
+  listenForTalkQuestions(talkQuestionsRef, talk) {
     talkQuestionsRef.on('value', (snap) => {
-      var talkQuestions = [];
+      let talkQuestions = [];
 
       snap.forEach((child) => {
-        talkQuestions.push({
-          body: child.val().body,
-          talk: child.val().talk,
-          user: child.val().user,
-          _key: child.key,
-        });
+        if(child.val().talk === talk.id) {
+          talkQuestions.push({
+            body: child.val().body,
+            talk: child.val().talk,
+            user: child.val().user,
+            _key: child.key,
+          });
+        }
       });
 
       this.setState({
         talkQuestions: this.state.talkQuestions.cloneWithRows(talkQuestions),
       });
     });
-  }
-
-  readQuestions(talks, userTalks) {
-    var arrayQuestions = [];
-
-    for (var i = 0; i < talks.length ; i++) {
-      for (var j = 0; j < userTalks.length; j++) {
-        if(talks[i]._key == userTalks[j].talk) {
-          switch(talks[i].day) {
-            case 'monday':
-              arrayUserTalksMon.push(talks[i]);
-              break;
-            case 'tuesday':
-              arrayUserTalksTue.push(talks[i]);
-              break;
-            case 'wednesday':
-              arrayUserTalksWed.push(talks[i]);
-              break;
-            case 'thursday':
-              arrayUserTalksThu.push(talks[i]);
-              break;
-            case 'friday':
-              arrayUserTalksFri.push(talks[i]);
-              break;
-            case 'saturday':
-              arrayUserTalksSat.push(talks[i]);
-          }
-        }
-      }
-      this.setState({
-        userTalksMon: arrayUserTalksMon,
-        userTalksTue: arrayUserTalksTue,
-        userTalksWed: arrayUserTalksWed,
-        userTalksThu: arrayUserTalksThu,
-        userTalksFri: arrayUserTalksFri,
-        userTalksSat: arrayUserTalksSat,
-      });
-    }
   }
 
   getObjectOfArray(array, index) {
@@ -123,17 +87,16 @@ export default class TalkQuestionsContainer extends Component {
 
           <Content padder>
           {
-            this.state.talkQuestions.length !== 0
-              ?
-              <ListView
-                dataSource={this.state.talkQuestions}
-                renderRow={(talkQuestion) => (<TalkQuestion talkQuestion={talkQuestion} />) }
-                enableEmptySections={true}
-                renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
-              :
-              <View style={styles.empty}>
-                <Text style={styles.emptyText}> { message } </Text>
-              </View>
+            this.state.talkQuestions.getRowCount() !== 0 ?
+            <ListView
+              dataSource={this.state.talkQuestions}
+              renderRow={(talkQuestion) => (<TalkQuestion talkQuestion={talkQuestion} />) }
+              enableEmptySections={true}
+              renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
+            /> :
+            <View style={styles.empty}>
+              <Text style={styles.emptyText}> { message } </Text>
+            </View>
           }
           </Content>
         </View>
