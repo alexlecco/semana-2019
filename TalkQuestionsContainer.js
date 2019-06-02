@@ -32,14 +32,17 @@ export default class TalkQuestionsContainer extends Component {
     super(props);
     this.state = {
       talkQuestions: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
+      users: []
     }
     this.loggedUser = this.props.loggedUser;
     this.talk = this.props.talk;
     this.talkQuestionsRef = firebaseApp.database().ref().child('questions');
+    this.usersRef = firebaseApp.database().ref().child('mobileUsers');
   }
 
   componentDidMount() {
     this.listenForTalkQuestions(this.talkQuestionsRef, this.props.talk);
+    this.listenForUsers(this.usersRef);
   }
 
   listenForTalkQuestions(talkQuestionsRef, talk) {
@@ -63,12 +66,28 @@ export default class TalkQuestionsContainer extends Component {
     });
   }
 
+  listenForUsers(usersRef) {
+    usersRef.on('value', (snap) => {
+			var users = [];
+			
+      snap.forEach((child) => {
+        users.push({
+          name: child.val().name,
+          userId: child.val().userId,
+          _key: child.val().userId,
+        });
+      });
+
+      this.setState({ users: users });
+    });
+  }
+
   getObjectOfArray(array, index) {
     return array[index] = array[index] || {};
   }
 
   render() {
-    const message = 'Aún no hay preguntas registradas en esta charla';
+    const message = 'Aún no hay preguntas registradas en este evento';
 
     return(
       <Container>
@@ -79,7 +98,7 @@ export default class TalkQuestionsContainer extends Component {
             </Button>
           </Left>
           <Body>
-            <Title> Preguntas de la charla </Title>
+            <Title> Preguntas de la charla: </Title>
           </Body>
         </Header>
         <View style={styles.container}>
@@ -90,7 +109,7 @@ export default class TalkQuestionsContainer extends Component {
             this.state.talkQuestions.getRowCount() !== 0 ?
             <ListView
               dataSource={this.state.talkQuestions}
-              renderRow={(talkQuestion) => (<TalkQuestion talkQuestion={talkQuestion} />) }
+              renderRow={(talkQuestion) => (<TalkQuestion talkQuestion={talkQuestion} users={this.state.users} />) }
               enableEmptySections={true}
               renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
             /> :

@@ -52,10 +52,6 @@ export default class TalkInfo extends Component {
     this.backTo = this.props.backTo;
   }
 
-  componentWillMount() {
-    this.setBackTo();
-  }
-
   componentDidMount() {
     this.askButtonText(this.props.loggedUser, this.props.talk);
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
@@ -91,11 +87,6 @@ export default class TalkInfo extends Component {
     text == 'Ya no me interesa' ?
       this.setState({ buttonText: 'Ya no me interesa' }) :
       this.setState({ buttonText: 'Me interesa' })
-  }
-
-  setBackTo() {
-    //this.setState({ backTo: this.props.backTo });
-    console.log("VolVER A:::::::::::::::::::::::::::::::::::::::::::::::::::::::::", this.props.backTo);
   }
 
   getObjectOfArray(array, index) {
@@ -137,7 +128,6 @@ export default class TalkInfo extends Component {
           }
 
           snap.ref.child(keyToRemove).remove();
-          console.log("DESTRUIMO");
         })
     } else {
       text = 'Ya no me interesa';
@@ -146,7 +136,6 @@ export default class TalkInfo extends Component {
         user: loggedUser.uid,
         talk: talk.id,
       }).key;
-      console.log("CREAMO");
 
       var userTalksSorted = this.props.userTalks;
       userTalksSorted.push({

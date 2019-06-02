@@ -6,6 +6,27 @@ import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback, Alert, } 
 export default class TalkQuestion extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+      user: ''
+    }
+	}
+
+	componentDidMount() {
+		this.getUserName(this.props.users);
+	}
+
+	getUserName(users) {
+		let localUser = '';
+
+		this.props.users.forEach((user) => {
+			for(let i = users.length; i > 0; i--) {
+				if(user._key === this.props.talkQuestion.user) {
+					localUser = user.name
+				}
+			}
+		});
+
+		this.setState({ user: localUser });
 	}
 
 	getObjectOfArray(array, index) {
@@ -13,8 +34,7 @@ export default class TalkQuestion extends Component {
 	}
 
 	render() {
-    let showOrHideTalkInfo = this.props.showOrHideTalkInfo;
-    let space = '             ';
+    let users = this.props.users;
 
 		return(
 			<View style={styles.TalkCardContainer}>
@@ -24,8 +44,7 @@ export default class TalkQuestion extends Component {
 						</View>
 						<View style={styles.TalkSiteContainer}>
 							<Text style={[styles.TalkSiteText]}>
-								{this.props.talkQuestion.talk}
-								{this.props.talkQuestion.user}
+								{ this.state.user }
 							</Text>
 						</View>
 					</View>
