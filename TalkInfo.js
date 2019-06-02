@@ -19,7 +19,9 @@ import {
 } from 'native-base';
 
 import { firebaseApp } from './firebase';
+
 import MakeTalkQuestion from './MakeTalkQuestion';
+import TalkQuestionsContainer from './TalkQuestionsContainer';
 
 export default class TalkInfo extends Component {
   static navigationOptions = {
@@ -41,6 +43,7 @@ export default class TalkInfo extends Component {
       buttonText: '',
       backTo: '',
       makeTalkQuestionVisible: false,
+      talkQuestionsContainerVisible: false,
     }
     this.loggedUser = this.props.loggedUser;
     this.sites = this.props.sites;
@@ -62,13 +65,15 @@ export default class TalkInfo extends Component {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
   }
 
-  showOrHideMakeTalkQuestion() {
-    this.setState({makeTalkQuestionVisible: !this.state.makeTalkQuestionVisible});
-  }
+  showMakeTalkQuestions() { this.setState({ makeTalkQuestionVisible: true }); }
+  
+  hideMakeTalkQuestions() { this.setState({ makeTalkQuestionVisible: false }); }
 
-  handleBackButton() {
-    return true;
-  }
+  showTalkQuestionsContainer() { this.setState({ talkQuestionsContainerVisible: true }); }
+
+  hideTalkQuestionsContainer() { this.setState({ talkQuestionsContainerVisible: false }); }
+
+  handleBackButton() { return true; }
 
   askButtonText(loggedUser, talk) {
     var text = 'Me interesa';
@@ -242,116 +247,121 @@ export default class TalkInfo extends Component {
         break;
     }
 
-    if(!this.state.makeTalkQuestionVisible) {
+    if(this.state.talkQuestionsContainerVisible) {
+      return(
+        <TalkQuestionsContainer hideTalkQuestionsContainer={this.hideTalkQuestionsContainer.bind(this)}
+                                loggedUser={this.props.loggedUser}
+                                talk={this.props.talk} />
+      )
+    }
 
+    if(this.state.makeTalkQuestionVisible) {
       return(
-        <Container>
-          <Header style={{backgroundColor: '#BD005E'}}>
-            <Left>
-              <Button transparent onPress={() => this.props.showOrHideTalkInfo(this.props.talk)}>
-                <Icon name='arrow-back' />
-              </Button>
-            </Left>
-            <Body>
-              <Title> { dayToShow } - { this.props.talk.time } </Title>
-              <Text style={{marginLeft: 15, color: `${this.getObjectOfArray(sites, this.props.talk.site - 1).color || 'red'}`}}>
-                { this.getObjectOfArray(this.props.sites, this.props.talk.site - 1 ).name }
-              </Text>
-            </Body>
-          </Header>
-          <Content>
-            <View style={styles.TalkContainer}>
-              <View style={styles.TalkTitleContainer}>
-                <Text style={styles.TalkTitle}>{ this.props.talk.title }</Text>
-              </View>
-              <View style={styles.TalkBodyContainer}>
-                <Text style={styles.TalkBody}>{ this.props.talk.description }</Text>
-              </View>
-              <View style={styles.speakerContainer}>
-                <View style={styles.TalkSpeakerContainer}>
-                  <Text style={styles.TalkSpeaker}>
-                  {
-                    this.props.talk.speaker ?
-                      `${speaker.name}` : ""
-                  }
-                  </Text>
-                </View>
-                <View>
-                  {
-                    speaker.photo ?
-                      <Image
-                        source={{uri: this.getSpeakerPhoto(speaker.photo)}}
-                        style={{height: 200, width: null, flex: 1}}
-                        style={styles.infoImage} /> : <Text />
-                  }
-                </View>
-                <View style={styles.TalkSpeakerBioContainer}>
-                  <Text style={styles.TalkSpeakerBio}>
-                    {
-                      speaker.bio ?
-                        speaker.bio : ""
-                    }
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <View>
-              {
-                site.photo ?
-                <View>
-                  <View><Text>Ubicación: </Text></View>
-                  <Card>
-                    <CardItem cardBody>
-                      <Image source={{uri: this.getMapPhoto(site.photo)}} style={{height: 200, width: null, flex: 1}} />
-                    </CardItem>
-                  </Card>
-                </View> : <Text />
-              }
-            </View>
-  
-            <Button transparent full primary onPress={() => this.shareOnSocial()} >
-              <Text style={{color: '#BD005E'}}>
-                Compartir
-              </Text>
-            </Button>
-            <Button transparent full primary onPress={() => {}} >
-              <Text style={{color: '#BD005E'}}>
-                Ver las preguntas de la charla
-              </Text>
-            </Button>
-          </Content>
-  
-          {
-            this.state.buttonText == 'Ya no me interesa' ?
-            (
-            <Button full style={styles.buttonColor}
-                    onPress={() => this.showOrHideMakeTalkQuestion()} >
-              <Text>
-                Hacer una pregunta
-              </Text>
-            </Button>
-            ) : <View />
-          }
-          
-          <View style={styles.buttonsSeparator}></View>
-          <Button full style={this.state.buttonText == 'Me interesa' ? styles.buttonColor : false}
-                  full primary transparent={this.state.buttonText == 'Ya no me interesa' ? true : false}
-                  onPress={() => this.addOrRemoveUserTalk(this.props.loggedUser, this.props.talk)} >
-            <Text style={this.state.buttonText == 'Ya no me interesa' ? styles.buttonText : false }>
-              { `${this.state.buttonText}` }
-            </Text>
-          </Button>
-        </Container>
-      );
-      
-    } else {
-      return(
-        <MakeTalkQuestion showOrHideMakeTalkQuestion={this.showOrHideMakeTalkQuestion.bind(this)}
+        <MakeTalkQuestion hideMakeTalkQuestions={this.hideMakeTalkQuestions.bind(this)}
                           loggedUser={this.props.loggedUser}
                           talk={this.props.talk} />
       )
     }
-    
+
+    return(
+      <Container>
+        <Header style={{backgroundColor: '#BD005E'}}>
+          <Left>
+            <Button transparent onPress={() => this.props.showOrHideTalkInfo(this.props.talk)}>
+              <Icon name='arrow-back' />
+            </Button>
+          </Left>
+          <Body>
+            <Title> { dayToShow } - { this.props.talk.time } </Title>
+            <Text style={{marginLeft: 15, color: `${this.getObjectOfArray(sites, this.props.talk.site - 1).color || 'red'}`}}>
+              { this.getObjectOfArray(this.props.sites, this.props.talk.site - 1 ).name }
+            </Text>
+          </Body>
+        </Header>
+        <Content>
+          <View style={styles.TalkContainer}>
+            <View style={styles.TalkTitleContainer}>
+              <Text style={styles.TalkTitle}>{ this.props.talk.title }</Text>
+            </View>
+            <View style={styles.TalkBodyContainer}>
+              <Text style={styles.TalkBody}>{ this.props.talk.description }</Text>
+            </View>
+            <View style={styles.speakerContainer}>
+              <View style={styles.TalkSpeakerContainer}>
+                <Text style={styles.TalkSpeaker}>
+                {
+                  this.props.talk.speaker ?
+                    `${speaker.name}` : ""
+                }
+                </Text>
+              </View>
+              <View>
+                {
+                  speaker.photo ?
+                    <Image
+                      source={{uri: this.getSpeakerPhoto(speaker.photo)}}
+                      style={{height: 200, width: null, flex: 1}}
+                      style={styles.infoImage} /> : <Text />
+                }
+              </View>
+              <View style={styles.TalkSpeakerBioContainer}>
+                <Text style={styles.TalkSpeakerBio}>
+                  {
+                    speaker.bio ?
+                      speaker.bio : ""
+                  }
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View>
+            {
+              site.photo ?
+              <View>
+                <View><Text>Ubicación: </Text></View>
+                <Card>
+                  <CardItem cardBody>
+                    <Image source={{uri: this.getMapPhoto(site.photo)}} style={{height: 200, width: null, flex: 1}} />
+                  </CardItem>
+                </Card>
+              </View> : <Text />
+            }
+          </View>
+
+          <Button transparent full primary onPress={() => this.shareOnSocial()} >
+            <Text style={{color: '#BD005E'}}>
+              Compartir
+            </Text>
+          </Button>
+          <Button transparent full primary onPress={() => this.showTalkQuestionsContainer()} >
+            <Text style={{color: '#BD005E'}}>
+              Ver las preguntas de la charla
+            </Text>
+          </Button>
+        </Content>
+
+        {
+          this.state.buttonText == 'Ya no me interesa' ?
+          (
+          <Button full style={styles.buttonColor}
+                  onPress={() => this.showMakeTalkQuestions()} >
+            <Text>
+              Hacer una pregunta
+            </Text>
+          </Button>
+          ) : <View />
+        }
+        
+        <View style={styles.buttonsSeparator}></View>
+        <Button full style={this.state.buttonText == 'Me interesa' ? styles.buttonColor : false}
+                full primary transparent={this.state.buttonText == 'Ya no me interesa' ? true : false}
+                onPress={() => this.addOrRemoveUserTalk(this.props.loggedUser, this.props.talk)} >
+          <Text style={this.state.buttonText == 'Ya no me interesa' ? styles.buttonText : false }>
+            { `${this.state.buttonText}` }
+          </Text>
+        </Button>
+      </Container>
+    );
   }
 }
 

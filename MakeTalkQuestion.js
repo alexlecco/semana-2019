@@ -43,7 +43,7 @@ export default class MakeTalkQuestion extends Component {
     }).key;
 
     this.setState({ body: '' });
-    this.props.showOrHideMakeTalkQuestion();
+    this.props.hideMakeTalkQuestions();
   }
 
   getObjectOfArray(array, index) {
@@ -55,7 +55,7 @@ export default class MakeTalkQuestion extends Component {
       <Container>
         <Header style={{backgroundColor: '#BD005E'}}>
           <Left>
-            <Button transparent onPress={() => this.props.showOrHideMakeTalkQuestion()}>
+            <Button transparent onPress={() => this.props.hideMakeTalkQuestions()}>
               <Icon name='arrow-back' />
             </Button>
           </Left>
