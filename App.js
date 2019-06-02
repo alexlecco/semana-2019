@@ -1,6 +1,6 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, ImageBackground, ListView, ListItem, YellowBox, } from 'react-native';
-import { AppLoading, Asset, Font, Icon } from 'expo';
+import { Platform, StatusBar, StyleSheet, View, ImageBackground, ListView, ListItem, Alert, YellowBox, } from 'react-native';
+import { Facebook, AppLoading, Asset, Font, Icon } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import AppNavigator from './navigation/AppNavigator';
 import { Container, Header, Left, Right, Button, Text, Body, Title, Footer, FooterTab, } from 'native-base';
@@ -382,18 +382,33 @@ export default class App extends React.Component {
   }
 
   async loginWithFacebook() {
-    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('1709694409111214',
-      { permissions: ['public_profile'] })
-
-    if(type === 'success') {
-      const credential = firebaseApp.auth.FacebookAuthProvider.credential(token)
-      firebaseApp.auth().signInWithCredential(credential).catch((error) => {
-        console.log(error)
+    try {
+      const {
+        type,
+        token,
+        expires,
+        permissions,
+        declinedPermissions,
+      } = await Facebook.logInWithReadPermissionsAsync('1709694409111214', {
+        permissions: ['public_profile'],
       });
-      console.log("Sign-in successful");
+      if (type === 'success') {
+        // Get the user's name using Facebook's Graph API
+        const credential = firebaseApp.auth.FacebookAuthProvider.credential(token)
+        firebaseApp.auth().signInWithCredential(credential).catch((error) => {
+          console.log(error)
+        });
+        console.log("Sign-in successful");
+
+        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+        Alert.alert('¡Ingresaste correctamente!', `Hola ${(await response.json()).name}!, gracias por participar de la semana de la ingeniería 2019`);
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
     }
   }
-
 
   async logoutWithFacebook() {
     this.setState({ logged: false, loggedUser: {} });
