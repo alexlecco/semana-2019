@@ -38,15 +38,19 @@ export default class MakeTalkQuestion extends Component {
 
   sendTalkQuestion() {
     try {
-      firebaseApp.database().ref().child('questions').push({
-        body: this.state.body,
-        user: this.props.loggedUser.uid,
-        talk: this.props.talk.id,
-      }).key;
-  
-      this.setState({ body: '' });
-      Alert.alert('¡Gracias por tu participación!', 'Tu pregunta se envió correctamente');
-      this.props.hideMakeTalkQuestions();
+      if(this.state.body !== '') {
+        firebaseApp.database().ref().child('questions').push({
+          body: this.state.body,
+          user: this.props.loggedUser.uid,
+          talk: this.props.talk.id,
+        }).key;
+    
+        this.setState({ body: '' });
+        Alert.alert('¡Gracias por tu participación!', 'Tu pregunta se envió correctamente');
+        this.props.hideMakeTalkQuestions();
+      } else {
+        Alert.alert('¡Error!', 'intentaste enviar una pregunta vacía');
+      }
     } catch ({ message }) {
       alert(`Se produjo un error: ${message}`);
     }
