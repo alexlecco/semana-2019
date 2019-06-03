@@ -31,7 +31,9 @@ export default class Schedule extends React.Component {
     },
     headerTitleStyle: {
       fontSize: 18,
+      fontWeight: 'normal',
     },
+    headerRight: <View style={{paddingRight: 15}}><Image style={{width: 100,height: 100}} source={require('../assets/images/logo-blanco.png')}/></View>,
   };
 
   constructor(props) {

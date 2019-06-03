@@ -19,9 +19,9 @@ export default class Sponsors extends React.Component {
     },
     headerTitleStyle: {
       fontSize: 18,
+      fontWeight: 'normal',
     },
-    imgWidth: 0,
-    imgHeight: 0,
+    headerRight: <View style={{paddingRight: 15}}><Image style={{width: 100,height: 100}} source={require('../assets/images/logo-blanco.png')}/></View>,
   };
 
   constructor(props) {
@@ -29,6 +29,8 @@ export default class Sponsors extends React.Component {
     this.state = {
       infos: [],
       feedbackVisible: false,
+      imgWidth: 0,
+      imgHeight: 0,
     }
     this.infosRef = firebaseApp.database().ref().child('infos');
     this.loggedUser = this.props.screenProps.loggedUser;

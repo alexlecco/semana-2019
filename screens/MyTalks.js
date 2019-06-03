@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, ListView, ListItem, Dimensions, } from 'react-native';
+import { ScrollView, StyleSheet, View, ListView, ListItem, Dimensions, Image, } from 'react-native';
 import { Container, Header, Tab, Tabs, TabHeading, Icon, Text, Content, } from 'native-base';
 import { ExpoLinksView } from '@expo/samples';
 
@@ -15,8 +15,10 @@ export default class MyTalks extends React.Component {
     headerStyle: {
       backgroundColor: colors.light,
       elevation: 0,
-      shadowOpacity: 0
+      shadowOpacity: 0,
+      fontWeight: 'normal',
     },
+    headerRight: <View style={{paddingRight: 15}}><Image style={{width: 100,height: 100}} source={require('../assets/images/logo-blanco.png')}/></View>,
   };
 
   constructor(props) {
