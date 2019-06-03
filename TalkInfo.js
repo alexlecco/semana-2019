@@ -45,6 +45,8 @@ export default class TalkInfo extends Component {
       backTo: '',
       makeTalkQuestionVisible: false,
       talkQuestionsContainerVisible: false,
+      imgWidth: 0,
+      imgHeight: 0,
     }
     this.loggedUser = this.props.loggedUser;
     this.sites = this.props.sites;
@@ -55,11 +57,22 @@ export default class TalkInfo extends Component {
 
   componentDidMount() {
     this.askButtonText(this.props.loggedUser, this.props.talk);
+    this.calculateImgSize(300, 300);
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
 
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+  }
+
+  calculateImgSize() {
+    Image.getSize(this.getMapPhoto(), (width, height) => {
+      // calculate image width and height 
+      const screenWidth = Dimensions.get('window').width
+      const scaleFactor = width / screenWidth
+      const imageHeight = height / scaleFactor
+      this.setState({imgWidth: screenWidth, imgHeight: imageHeight})
+    })
   }
 
   showMakeTalkQuestions() { this.setState({ makeTalkQuestionVisible: true }); }
@@ -312,7 +325,10 @@ export default class TalkInfo extends Component {
                 <View><Text style={{color: colors.white}}> Ubicación: </Text></View>
                 <Card>
                   <CardItem cardBody>
-                    <Image source={{uri: this.getMapPhoto(site.photo)}} style={{height: 200, width: null, flex: 1}} />
+                    <Image
+                      source={{uri: this.getMapPhoto(site.photo)}}
+                      style={{width: this.state.imgWidth, height: this.state.imgHeight}}
+                    />
                   </CardItem>
                 </Card>
               </View> : <Text />
