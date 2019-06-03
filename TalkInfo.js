@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
 	},
   TalkSpeaker: {
     fontSize: 17,
-    color: colors.text1,
+    color: colors.text2,
     textAlign: 'center',
   },
   TalkSpeakerBio: {
