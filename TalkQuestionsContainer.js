@@ -24,6 +24,7 @@ import {
 } from 'native-base';
 
 import TalkQuestion from './TalkQuestion';
+import colors from './constants/Colors';
 
 import { firebaseApp } from './firebase';
 
@@ -91,7 +92,7 @@ export default class TalkQuestionsContainer extends Component {
 
     return(
       <Container>
-        <Header style={{backgroundColor: '#BD005E'}}>
+        <Header style={{backgroundColor: colors.light}}>
           <Left>
             <Button transparent onPress={() => this.props.hideTalkQuestionsContainer()}>
               <Icon name='arrow-back' />
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 0,
-    backgroundColor: '#fff',
+    backgroundColor: colors.dark,
     paddingLeft: 10,
     paddingRight: 10,
   },
@@ -141,6 +142,7 @@ const styles = StyleSheet.create({
   },
   centerText: {
     textAlign: 'center',
+    color: colors.text2,
   },
   boldText: {
     fontWeight: 'bold',
@@ -157,6 +159,6 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     textAlign: 'center',
-    color: '#575757',
+    color: colors.text1,
   },
 })

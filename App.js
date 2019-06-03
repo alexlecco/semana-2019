@@ -8,6 +8,7 @@ import { Container, Header, Left, Right, Button, Text, Body, Title, Footer, Foot
 import TalkInfo from './TalkInfo';
 
 import { firebaseApp } from './firebase';
+import colors from './constants/Colors';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -559,11 +560,11 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.dark,
   },
   statusBarUnderlay: {
     height: 24,
-    backgroundColor: '#BD005E',
+    backgroundColor: colors.light,
   },
   loginContainer: {
     flex: 1,

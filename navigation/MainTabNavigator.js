@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import Schedule from '../screens/Schedule';
 import MyTalks from '../screens/MyTalks';
 import Information from '../screens/Information';
+import colors from '../constants/Colors';
 
 const HomeStack = createStackNavigator({
   Home: Schedule,
@@ -14,7 +15,7 @@ const HomeStack = createStackNavigator({
 HomeStack.navigationOptions = {
   tabBarLabel: 'Calendario',
   tabBarOptions: {
-    activeTintColor: '#BD005E',
+    activeTintColor: colors.light,
   },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -35,7 +36,7 @@ const LinksStack = createStackNavigator({
 LinksStack.navigationOptions = {
   tabBarLabel: 'Mis charlas',
   tabBarOptions: {
-    activeTintColor: '#BD005E',
+    activeTintColor: colors.light,
   },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -52,7 +53,7 @@ const SettingsStack = createStackNavigator({
 SettingsStack.navigationOptions = {
   tabBarLabel: 'Información',
   tabBarOptions: {
-    activeTintColor: '#BD005E',
+    activeTintColor: colors.light,
   },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon

@@ -6,13 +6,14 @@ import { ExpoConfigView } from '@expo/samples';
 import Feedback from '../Feedback';
 
 import { firebaseApp } from '../firebase';
+import colors from '../constants/Colors';
 
 export default class Information extends React.Component {
   static navigationOptions = {
     title: 'Informacion',
-    headerTintColor: '#ffffff',
+    headerTintColor: colors.white,
     headerStyle: {
-      backgroundColor: '#BD005E',
+      backgroundColor: colors.light,
       elevation: 0,
       shadowOpacity: 0
     },
@@ -81,7 +82,7 @@ export default class Information extends React.Component {
             <Text style={styles.infoBody}> { this.getObjectOfArray(infos, 0).body } </Text>
           </View>
           <View style={styles.feedbackButtonContainer}>
-            <Button full style={{backgroundColor: '#BD005E'}} onPress={() => this.showOrHideFeedback()} >
+            <Button full style={{backgroundColor: colors.light}} onPress={() => this.showOrHideFeedback()} >
               <Text>
                 comentarios y sugerencias
               </Text>
@@ -102,18 +103,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 0,
-    backgroundColor: '#fff',
+    backgroundColor: colors.dark,
     paddingLeft: 10,
     paddingRight: 10,
   },
   feedbackText: {
     fontSize: 30,
-    color: '#F5FCFF',
+    color: colors.white,
     margin: 10,
   },
   infoTitle: {
     fontSize: 20,
-    color: '#BD005E',
+    color: colors.light,
     lineHeight: 24,
     textAlign: 'center',
     marginTop: 20,
@@ -148,6 +149,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   feedbackButton: {
-    color: '#BD005E',
+    color: colors.light,
   },
 });

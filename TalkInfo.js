@@ -19,6 +19,7 @@ import {
 } from 'native-base';
 
 import { firebaseApp } from './firebase';
+import colors from './constants/Colors';
 
 import MakeTalkQuestion from './MakeTalkQuestion';
 import TalkQuestionsContainer from './TalkQuestionsContainer';
@@ -26,9 +27,9 @@ import TalkQuestionsContainer from './TalkQuestionsContainer';
 export default class TalkInfo extends Component {
   static navigationOptions = {
     title: 'Informacion',
-    headerTintColor: '#ffffff',
+    headerTintColor: colors.text1,
     headerStyle: {
-      backgroundColor: '#BD005E',
+      backgroundColor: colors.light,
       elevation: 0,
       shadowOpacity: 0
     },
@@ -254,7 +255,7 @@ export default class TalkInfo extends Component {
 
     return(
       <Container>
-        <Header style={{backgroundColor: '#BD005E'}}>
+        <Header style={{backgroundColor: colors.light}}>
           <Left>
             <Button transparent onPress={() => this.props.showOrHideTalkInfo(this.props.talk)}>
               <Icon name='arrow-back' />
@@ -267,7 +268,7 @@ export default class TalkInfo extends Component {
             </Text>
           </Body>
         </Header>
-        <Content>
+        <Content style={styles.dark}>
           <View style={styles.TalkContainer}>
             <View style={styles.TalkTitleContainer}>
               <Text style={styles.TalkTitle}>{ this.props.talk.title }</Text>
@@ -303,11 +304,11 @@ export default class TalkInfo extends Component {
               </View>
             </View>
           </View>
-          <View>
+          <View style={styles.dark}>
             {
               site.photo ?
               <View>
-                <View><Text>Ubicación: </Text></View>
+                <View><Text style={{color: colors.white}}> Ubicación: </Text></View>
                 <Card>
                   <CardItem cardBody>
                     <Image source={{uri: this.getMapPhoto(site.photo)}} style={{height: 200, width: null, flex: 1}} />
@@ -317,16 +318,18 @@ export default class TalkInfo extends Component {
             }
           </View>
 
-          <Button transparent full primary onPress={() => this.shareOnSocial()} >
-            <Text style={{color: '#BD005E'}}>
-              Compartir
-            </Text>
-          </Button>
-          <Button transparent full primary onPress={() => this.showTalkQuestionsContainer()} >
-            <Text style={{color: '#BD005E'}}>
-              Ver las preguntas de la charla
-            </Text>
-          </Button>
+          <View style={styles.dark}>
+            <Button transparent full primary onPress={() => this.shareOnSocial()} >
+              <Text style={{color: colors.text2}}>
+                Compartir
+              </Text>
+            </Button>
+            <Button transparent full primary onPress={() => this.showTalkQuestionsContainer()} >
+              <Text style={{color: colors.text2}}>
+                Ver las preguntas de la charla
+              </Text>
+            </Button>
+          </View>
         </Content>
 
         {
@@ -342,8 +345,7 @@ export default class TalkInfo extends Component {
         }
         
         <View style={styles.buttonsSeparator}></View>
-        <Button full style={this.state.buttonText == 'Me interesa' ? styles.buttonColor : false}
-                full primary transparent={this.state.buttonText == 'Ya no me interesa' ? true : false}
+        <Button full style={this.state.buttonText == 'Me interesa' ? styles.buttonColor : styles.buttonColor2}
                 onPress={() => this.addOrRemoveUserTalk(this.props.loggedUser, this.props.talk)} >
           <Text style={this.state.buttonText == 'Ya no me interesa' ? styles.buttonText : false }>
             { `${this.state.buttonText}` }
@@ -357,6 +359,8 @@ export default class TalkInfo extends Component {
 const styles = StyleSheet.create({
   TalkContainer: {
     flexDirection: 'column',
+    backgroundColor: colors.dark,
+    flex: 1,
   },
 	TalkTitleContainer: {
 		marginTop: 10,
@@ -390,20 +394,20 @@ const styles = StyleSheet.create({
   },
   TalkTitle: {
 		fontSize: 20,
-    color: '#BD005E',
+    color: colors.text2,
 	},
   TalkBody: {
 		fontSize: 17,
-    color: '#4f4f4f',
+    color: colors.text1,
 	},
   TalkSpeaker: {
     fontSize: 17,
-    color: '#000000',
+    color: colors.text1,
     textAlign: 'center',
   },
   TalkSpeakerBio: {
     fontSize: 17,
-    color: '#727272',
+    color: colors.text1,
     textAlign: 'center',
     fontStyle: 'italic',
   },
@@ -428,16 +432,22 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   shareText: {
-    color: '#BD005E',
+    color: colors.light,
   },
   buttonText: {
-    color: '#BD005E',
+    color: colors.text2,
   },
   buttonColor: {
-    backgroundColor: '#BD005E',
+    backgroundColor: colors.light,
+  },
+  buttonColor2: {
+    backgroundColor: colors.dark,
   },
   buttonsSeparator: {
-    backgroundColor: 'white',
+    backgroundColor: colors.dark,
     height: 10,
+  },
+  dark: {
+    backgroundColor: colors.dark,
   }
 });

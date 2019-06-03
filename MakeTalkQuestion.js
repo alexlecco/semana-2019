@@ -24,6 +24,7 @@ import {
 } from 'native-base';
 
 import { firebaseApp } from './firebase';
+import colors from './constants/Colors';
 
 export default class MakeTalkQuestion extends Component {
   constructor(props){
@@ -58,16 +59,17 @@ export default class MakeTalkQuestion extends Component {
   render() {
     return(
       <Container>
-        <Header style={{backgroundColor: '#BD005E'}}>
+        <Header style={{backgroundColor: colors.light}}>
           <Left>
             <Button transparent onPress={() => this.props.hideMakeTalkQuestions()}>
               <Icon name='arrow-back' />
             </Button>
           </Left>
           <Body>
-            <Title> Hacer una pregunta </Title>
+            <Title style={{color: colors.white}}> Hacer una pregunta </Title>
           </Body>
         </Header>
+        
         <View style={styles.container}>
           <Text style={[styles.centerText, { fontSize: 20, marginBottom: 10, marginTop: 7 }]}>{ this.props.talk.title } </Text>
           <Text style={styles.centerText}>
@@ -78,15 +80,16 @@ export default class MakeTalkQuestion extends Component {
             <Form>
               <TextInput
                 multiline={true}
+                style={{color: colors.text1, fontSize: 18}}
                 numberOfLines={4}
-                placeholder="pregunta para el disertarte"
+                placeholder="[tocá aquí para escribir tu pregunta]"
                 value={ this.state.body }
                 onChangeText={(text) => this.setState({body: text})} />
             </Form>
           </Content>
 
           <View style={styles.feedbackButtonContainer}>
-            <Button full style={{backgroundColor: '#BD005E'}} onPress={() => this.sendTalkQuestion()} >
+            <Button full style={{backgroundColor: colors.light}} onPress={() => this.sendTalkQuestion()} >
               <Text>
                 Enviar pregunta
               </Text>
@@ -102,7 +105,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 0,
-    backgroundColor: '#fff',
+    backgroundColor: colors.dark,
     paddingLeft: 10,
     paddingRight: 10,
   },
@@ -115,8 +118,10 @@ const styles = StyleSheet.create({
   },
   centerText: {
     textAlign: 'center',
+    color: colors.text1,
   },
   boldText: {
     fontWeight: 'bold',
+    color: colors.text2,
   }
 })

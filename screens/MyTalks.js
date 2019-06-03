@@ -6,13 +6,14 @@ import { ExpoLinksView } from '@expo/samples';
 import TalkCard from '../TalkCard';
 
 import { firebaseApp } from '../firebase';
+import colors from '../constants/Colors';
 
 export default class MyTalks extends React.Component {
   static navigationOptions = {
     title: 'Mis charlas',
     headerTintColor: '#ffffff',
     headerStyle: {
-      backgroundColor: '#BD005E',
+      backgroundColor: colors.light,
       elevation: 0,
       shadowOpacity: 0
     },
@@ -129,7 +130,7 @@ export default class MyTalks extends React.Component {
     return (
       <Container>
         <Tabs>
-          <Tab heading={ <TabHeading style={{backgroundColor: '#BD005E'}}><Text>lun</Text></TabHeading> }>
+          <Tab heading={ <TabHeading style={{backgroundColor: colors.light}}><Text>lun</Text></TabHeading> }>
             {
               this.state.userTalksMon.length != 0 ?
                 <ListView
@@ -142,7 +143,7 @@ export default class MyTalks extends React.Component {
                 </View>
             }
           </Tab>
-          <Tab heading={ <TabHeading style={{backgroundColor: '#BD005E'}}><Text>mar</Text></TabHeading> }>
+          <Tab heading={ <TabHeading style={{backgroundColor: colors.light}}><Text>mar</Text></TabHeading> }>
             {
               this.state.userTalksTue.length != 0 ?
                 <ListView
@@ -153,7 +154,7 @@ export default class MyTalks extends React.Component {
                 <View style={styles.empty}><Text style={styles.emptyText}> { message } </Text></View>
             }
           </Tab>
-          <Tab heading={ <TabHeading style={{backgroundColor: '#BD005E'}}><Text>mie</Text></TabHeading> }>
+          <Tab heading={ <TabHeading style={{backgroundColor: colors.light}}><Text>mie</Text></TabHeading> }>
             {
               this.state.userTalksWed.length != 0 ?
                 <ListView
@@ -164,7 +165,7 @@ export default class MyTalks extends React.Component {
                 <View style={styles.empty}><Text style={styles.emptyText}> { message } </Text></View>
             }
           </Tab>
-          <Tab heading={ <TabHeading style={{backgroundColor: '#BD005E'}}><Text>jue</Text></TabHeading> }>
+          <Tab heading={ <TabHeading style={{backgroundColor: colors.light}}><Text>jue</Text></TabHeading> }>
             {
               this.state.userTalksThu.length != 0 ?
                 <ListView
@@ -175,24 +176,12 @@ export default class MyTalks extends React.Component {
                 <View style={styles.empty}><Text style={styles.emptyText}> { message } </Text></View>
             }
           </Tab>
-          <Tab heading={ <TabHeading style={{backgroundColor: '#BD005E'}}><Text>vie</Text></TabHeading> }>
+          <Tab heading={ <TabHeading style={{backgroundColor: colors.light}}><Text>vie</Text></TabHeading> }>
             {
               this.state.userTalksFri.length != 0 ?
                 <ListView
                   dataSource={this.props.screenProps.dataSourceUserTalks}
                   renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[4]) }
-                  enableEmptySections={true}
-                  renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} /> :
-                <View style={styles.empty}><Text style={styles.emptyText}> { message } </Text></View>
-            }
-          </Tab>
-
-          <Tab heading={ <TabHeading style={{backgroundColor: '#BD005E'}}><Text>sab</Text></TabHeading> }>
-            {
-              this.state.userTalksSat.length != 0 ?
-                <ListView
-                  dataSource={this.props.screenProps.dataSourceUserTalks}
-                  renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[5]) }
                   enableEmptySections={true}
                   renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} /> :
                 <View style={styles.empty}><Text style={styles.emptyText}> { message } </Text></View>

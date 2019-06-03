@@ -3,6 +3,8 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback, Alert, } from 'react-native';
 
+import colors from './constants/Colors';
+
 export default class TalkQuestion extends Component {
 	constructor(props) {
 		super(props);
@@ -72,8 +74,8 @@ const styles = StyleSheet.create({
 	questionUserName: {
 		fontSize: 13,
 		textAlign: 'center',
-		color: '#ffaf19',
-		flexWrap: 'wrap',		
+		color: colors.text2,
+		flexWrap: 'wrap',
 	},
 	questionBodyContainer: {
 		flexWrap: 'wrap',
@@ -82,6 +84,6 @@ const styles = StyleSheet.create({
   questionBody: {
 		textAlign: 'center',
 		fontSize: 17,
-    color: '#d2d3d5',
+    color: colors.text1,
 	},
 });

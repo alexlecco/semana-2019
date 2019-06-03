@@ -3,6 +3,8 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback, Alert, } from 'react-native';
 
+import colors from './constants/Colors';
+
 export default class TalkCard extends Component {
 	constructor(props) {
 		super(props);
@@ -49,7 +51,8 @@ export default class TalkCard extends Component {
 const styles = StyleSheet.create({
   TalkCardContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
+		alignItems: 'center',
+		backgroundColor: colors.dark,
   },
 	TalCardColumn: {
     flexDirection: 'column',
@@ -78,6 +81,6 @@ const styles = StyleSheet.create({
 	},
 	TalkText: {
 		fontSize: 17,
-    color: '#4f4f4f',
+    color: colors.text1,
 	},
 });

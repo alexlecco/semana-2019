@@ -18,13 +18,14 @@ import { MonoText } from '../components/StyledText';
 import TalkCard from '../TalkCard';
 
 import { firebaseApp } from '../firebase';
+import colors from '../constants/Colors';
 
 export default class Schedule extends React.Component {
   static navigationOptions = {
     title: 'Cronograma',
-    headerTintColor: '#ffffff',
+    headerTintColor: colors.white,
     headerStyle: {
-      backgroundColor: '#BD005E',
+      backgroundColor: colors.light,
       elevation: 0,
       shadowOpacity: 0
     },
@@ -98,9 +99,9 @@ export default class Schedule extends React.Component {
     let talks = this.props.screenProps.talks;
 
     return (
-      <Container>
+      <Container style={styles.dark}>
           <Tabs>
-            <Tab heading={ <TabHeading style={{backgroundColor: '#BD005E'}}><Text>lun</Text></TabHeading> }>
+            <Tab heading={ <TabHeading style={{backgroundColor: colors.light}}><Text>lun</Text></TabHeading> }>
               <ListView
                 dataSource={this.props.screenProps.dataSourceTalksMon}
                 renderRow={(talk) => this.renderTimeYesOrNo(talk) }
@@ -108,7 +109,7 @@ export default class Schedule extends React.Component {
                 renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
             </Tab>
 
-            <Tab heading={ <TabHeading style={{backgroundColor: '#BD005E'}}><Text>mar</Text></TabHeading> }>
+            <Tab heading={ <TabHeading style={{backgroundColor: colors.light}}><Text>mar</Text></TabHeading> }>
               <ListView
                 dataSource={this.props.screenProps.dataSourceTalksTue}
                 renderRow={(talk) => this.renderTimeYesOrNo(talk) }
@@ -116,7 +117,7 @@ export default class Schedule extends React.Component {
                 renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
             </Tab>
 
-            <Tab heading={ <TabHeading style={{backgroundColor: '#BD005E'}}><Text>mie</Text></TabHeading> }>
+            <Tab heading={ <TabHeading style={{backgroundColor: colors.light}}><Text>mie</Text></TabHeading> }>
               <ListView
                 dataSource={this.props.screenProps.dataSourceTalksWed}
                 renderRow={(talk) => this.renderTimeYesOrNo(talk) }
@@ -124,7 +125,7 @@ export default class Schedule extends React.Component {
                 renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
             </Tab>
 
-            <Tab heading={ <TabHeading style={{backgroundColor: '#BD005E'}}><Text>jue</Text></TabHeading> }>
+            <Tab heading={ <TabHeading style={{backgroundColor: colors.light}}><Text>jue</Text></TabHeading> }>
               <ListView
                 dataSource={this.props.screenProps.dataSourceTalksThu}
                 renderRow={(talk) => this.renderTimeYesOrNo(talk) }
@@ -132,17 +133,9 @@ export default class Schedule extends React.Component {
                 renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
             </Tab>
 
-            <Tab heading={ <TabHeading style={{backgroundColor: '#BD005E'}}><Text>vie</Text></TabHeading> }>
+            <Tab heading={ <TabHeading style={{backgroundColor: colors.light}}><Text>vie</Text></TabHeading> }>
               <ListView
                 dataSource={this.props.screenProps.dataSourceTalksFri}
-                renderRow={(talk) => this.renderTimeYesOrNo(talk) }
-                enableEmptySections={true}
-                renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
-            </Tab>
-
-            <Tab heading={ <TabHeading style={{backgroundColor: '#BD005E'}}><Text>sab</Text></TabHeading> }>
-              <ListView
-                dataSource={this.props.screenProps.dataSourceTalksSat}
                 renderRow={(talk) => this.renderTimeYesOrNo(talk) }
                 enableEmptySections={true}
                 renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
@@ -151,52 +144,12 @@ export default class Schedule extends React.Component {
       </Container>
     );
   }
-
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      const learnMoreButton = (
-        <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-          Learn more
-        </Text>
-      );
-
-      return (
-        <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use useful development
-          tools. {learnMoreButton}
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.developmentModeText}>
-          You are not in development mode, your app will run at full speed.
-        </Text>
-      );
-    }
-  }
-
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
-
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
+    backgroundColor: colors.dark,
   },
   contentContainer: {
     paddingTop: 30,
@@ -264,11 +217,14 @@ const styles = StyleSheet.create({
     color: '#2e78b7',
   },
   weekDays: {
-    color: '#ffffff',
+    color: colors.white,
   },
   separator: {
     flex: 1,
     height: StyleSheet.hairlineWidth,
-    backgroundColor: '#acacac',
+    backgroundColor: colors.text2,
   },
+  dark: {
+    backgroundColor: colors.dark,
+  }
 });
