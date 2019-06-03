@@ -22,11 +22,11 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.alexlecco.semana2019"
+      "bundleIdentifier": "com.alexlecco.semanautn2019"
     },
     "android": {
-      "package": "com.alexlecco.semana2019",
-      "versionCode": 2,
+      "package": "com.alexlecco.semanautn2019",
+      "versionCode": 3,
       "permissions": []
     }
   }
