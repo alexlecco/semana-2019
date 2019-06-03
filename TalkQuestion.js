@@ -43,8 +43,8 @@ export default class TalkQuestion extends Component {
             </View>
 
 						<View style={styles.questionUserNameContainer}>
-							<Text style={styles.questionUserName}>
-								{ this.state.user }
+							<Text style={{color: colors.text2, fontSize: 15, textAlign: 'center'}}>
+								{ `"${this.state.user}"` }
 							</Text>
 						</View>
 
@@ -66,24 +66,22 @@ const styles = StyleSheet.create({
 	},
 	questionUserNameContainer: {
 		flexWrap: 'wrap',
-		textAlign: 'right',
 		paddingBottom: 10,
 		flexDirection: 'row',
 		width: Dimensions.get('window').width - 82,
 	},
 	questionUserName: {
-		fontSize: 13,
-		textAlign: 'center',
+		fontSize: 15,
 		color: colors.text2,
-		flexWrap: 'wrap',
 	},
 	questionBodyContainer: {
 		flexWrap: 'wrap',
-		textAlign: 'center',
+		flexDirection: 'row',
+		width: Dimensions.get('window').width - 82,
 	},
   questionBody: {
 		textAlign: 'center',
-		fontSize: 17,
+		fontSize: 20,
     color: colors.text1,
 	},
 });
