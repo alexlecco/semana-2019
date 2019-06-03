@@ -406,7 +406,7 @@ export default class App extends React.Component {
         expires,
         permissions,
         declinedPermissions,
-      } = await Facebook.logInWithReadPermissionsAsync('1709694409111214', {
+      } = await Facebook.logInWithReadPermissionsAsync('599546973887572', {
         permissions: ['public_profile'],
       });
       if (type === 'success') {
