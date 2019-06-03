@@ -41,7 +41,7 @@ export default class Feedback extends Component {
         <View style={styles.container}>
           <Text style={[styles.centerText, { fontSize: 20, marginBottom: 10, marginTop: 7 }]}>Gracias por colaborar</Text>
           <Text style={styles.centerText}>
-            ¿Que te parece la app de la Semana de la Ingeniería 2018? Dejanos alguna sugerencia que se te ocurra para mejorarla.
+            ¿Que te parece la app de la Semana de la Ingeniería 2019? Dejanos alguna sugerencia que se te ocurra para mejorarla.
           </Text>
 
           <Content padder>

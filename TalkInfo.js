@@ -185,25 +185,26 @@ export default class TalkInfo extends Component {
       "https://firebasestorage.googleapis.com/v0/b/semana-utn-c9f91.appspot.com/o/maps%2Fno-map.png?alt=media"
   }
 
-  shareOnSocial() {
-    Share.share({
-      message: `Semana de la Ingeniería 2018\nMe interesa asistir a: "${this.props.talk.title}"\n\n#SemanaUTNFRT #UTNFRT`,
-      title: 'Semana de la Ingeniería 2018'
-    }, {
-      ...Platform.select({
-        ios: {
-          // iOS only:
-          excludedActivityTypes: [
-            'com.apple.UIKit.activity.PostToTwitter'
-          ]
-        },
-        android: {
-          // Android only:
-          dialogTitle: 'Compartir: ' + this.props.talk.title
-        }
+  async onShare() {
+    try {
+      const result = await Share.share({
+        message: `Semana de la Ingeniería 2019\nMe interesa asistir a: "${this.props.talk.title}"\n\n#SemanaUTNFRT #UTNFRT #Semana2019`,
+        title: 'Semana de la Ingeniería 2019'
       })
-    });
-  }
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   render() {
     sites = this.props.sites;
@@ -319,7 +320,7 @@ export default class TalkInfo extends Component {
           </View>
 
           <View style={styles.dark}>
-            <Button transparent full primary onPress={() => this.shareOnSocial()} >
+            <Button transparent full primary onPress={() => this.onShare()} >
               <Text style={{color: colors.text2}}>
                 Compartir
               </Text>
