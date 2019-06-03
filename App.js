@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, ImageBackground, ListView, ListItem, Alert, YellowBox, } from 'react-native';
+import { Platform, Dimensions, StatusBar, StyleSheet, View, ImageBackground, Image, ListView, ListItem, Alert, YellowBox, } from 'react-native';
 import { Facebook, AppLoading, Asset, Font, Icon } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import AppNavigator from './navigation/AppNavigator';
@@ -40,6 +40,8 @@ export default class App extends React.Component {
       logged: false,
       loggedUser: {},
       backTo: '',
+      imgWidth: 0,
+      imgHeight: 0,
     };
     showOrHideTalkInfo = this.showOrHideTalkInfo.bind(this);
     logoutWithFacebook = this.logoutWithFacebook.bind(this);
@@ -80,11 +82,21 @@ export default class App extends React.Component {
       ...Ionicons.font,
     });
 
+    this.calculateImgSize(300, 300);
     this.listenForSites(this.sitesRef);
     this.listenForTalks(this.talksRef);
     this.listenForUsers(this.usersRef);
     this.listenForSpeakers(this.speakersRef);
-    console.log("Los datos fueron leidos");
+  }
+
+  calculateImgSize() {
+    Image.getSize(this.getLoginScreen(), (width, height) => {
+      // calculate image width and height 
+      const screenWidth = Dimensions.get('window').width
+      const scaleFactor = width / screenWidth
+      const imageHeight = height / scaleFactor
+      this.setState({imgWidth: screenWidth, imgHeight: imageHeight})
+    })
   }
 
   listenForSites(sitesRef) {
@@ -284,6 +296,10 @@ export default class App extends React.Component {
         talks: talks,
       });
     });
+  }
+
+  getLoginScreen() {
+    return 'https://firebasestorage.googleapis.com/v0/b/semana-utn-c9f91.appspot.com/o/login.png?alt=media&token=5695990c-690b-4114-99ca-db726ebbec51';
   }
 
   getObjectOfArray(array, index) {
@@ -509,10 +525,11 @@ export default class App extends React.Component {
             <View style={styles.container}>
               {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
               {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
-
+              
               <ImageBackground
-                source={require('./assets/images/loginScreen.png')}
-                style={{width: '100%', height: '100%'}}>
+                source={require('./assets/images/login.png')}
+                style={{width: this.state.imgWidth, height: this.state.imgHeight}}
+              >           
                   <View style={styles.loginContainer}>
                     {
                       !this.state.logged ?
