@@ -5,7 +5,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import TabBarIcon from '../components/TabBarIcon';
 import Schedule from '../screens/Schedule';
 import MyTalks from '../screens/MyTalks';
-import Information from '../screens/Information';
+import Sponsors from '../screens/Sponsors';
 import colors from '../constants/Colors';
 
 const HomeStack = createStackNavigator({
@@ -15,7 +15,7 @@ const HomeStack = createStackNavigator({
 HomeStack.navigationOptions = {
   tabBarLabel: 'Calendario',
   tabBarOptions: {
-    activeTintColor: colors.light,
+    activeTintColor: colors.medium,
   },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -36,7 +36,7 @@ const LinksStack = createStackNavigator({
 LinksStack.navigationOptions = {
   tabBarLabel: 'Mis charlas',
   tabBarOptions: {
-    activeTintColor: colors.light,
+    activeTintColor: colors.medium,
   },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -47,18 +47,18 @@ LinksStack.navigationOptions = {
 };
 
 const SettingsStack = createStackNavigator({
-  Settings: Information,
+  Settings: Sponsors,
 });
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: 'Información',
+  tabBarLabel: 'Sponsors',
   tabBarOptions: {
-    activeTintColor: colors.light,
+    activeTintColor: colors.medium,
   },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-options' : 'md-information-circle'}
+      name={Platform.OS === 'ios' ? 'ios-options' : 'md-people'}
     />
   ),
 };

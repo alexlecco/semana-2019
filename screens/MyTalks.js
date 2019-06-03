@@ -11,7 +11,7 @@ import colors from '../constants/Colors';
 export default class MyTalks extends React.Component {
   static navigationOptions = {
     title: 'Mis charlas',
-    headerTintColor: '#ffffff',
+    headerTintColor: colors.white,
     headerStyle: {
       backgroundColor: colors.light,
       elevation: 0,
@@ -128,7 +128,7 @@ export default class MyTalks extends React.Component {
     let talks = this.props.screenProps.talks;
 
     return (
-      <Container>
+      <Container style={styles.dark}>
         <Tabs>
           <Tab heading={ <TabHeading style={{backgroundColor: colors.light}}><Text>lun</Text></TabHeading> }>
             {
@@ -197,21 +197,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 0,
-    backgroundColor: '#fff',
-  },
-  getStartedContainer: {
-    flex: 1,
-    justifyContent:'center',
-    alignItems:'center'
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
+    backgroundColor: colors.text2,
   },
   weekDays: {
-    color: '#ffffff',
+    color: colors.white,
   },
   empty: {
     flex: 1,
@@ -225,11 +214,11 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     textAlign: 'center',
-    color: '#575757',
+    color: colors.medium,
   },
   separator: {
     flex: 1,
     height: StyleSheet.hairlineWidth,
-    backgroundColor: '#acacac',
+    backgroundColor: colors.text2,
   },
 });

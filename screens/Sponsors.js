@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Image, TouchableHighlight, } from 'react-native';
+import { ScrollView, StyleSheet, View, Image, TouchableHighlight, Dimensions, } from 'react-native';
 import { Text, Textarea, Form, Content, Container, Button, } from 'native-base';
 import { ExpoConfigView } from '@expo/samples';
 
@@ -8,9 +8,9 @@ import Feedback from '../Feedback';
 import { firebaseApp } from '../firebase';
 import colors from '../constants/Colors';
 
-export default class Information extends React.Component {
+export default class Sponsors extends React.Component {
   static navigationOptions = {
-    title: 'Informacion',
+    title: 'Sponsors',
     headerTintColor: colors.white,
     headerStyle: {
       backgroundColor: colors.light,
@@ -20,6 +20,8 @@ export default class Information extends React.Component {
     headerTitleStyle: {
       fontSize: 18,
     },
+    imgWidth: 0,
+    imgHeight: 0,
   };
 
   constructor(props) {
@@ -34,6 +36,17 @@ export default class Information extends React.Component {
 
   componentDidMount() {
     this.listenForInfos(this.infosRef);
+    this.calculateImgSize(300, 300);
+  }
+
+  calculateImgSize() {
+    Image.getSize(this.getSponsors(), (width, height) => {
+      // calculate image width and height 
+      const screenWidth = Dimensions.get('window').width
+      const scaleFactor = width / screenWidth
+      const imageHeight = height / scaleFactor
+      this.setState({imgWidth: screenWidth, imgHeight: imageHeight})
+    })
   }
 
   listenForInfos(infosRef) {
@@ -62,6 +75,10 @@ export default class Information extends React.Component {
     this.setState({feedbackVisible: !this.state.feedbackVisible});
   }
 
+  getSponsors() {
+    return 'https://firebasestorage.googleapis.com/v0/b/semana-utn-c9f91.appspot.com/o/sponsors.png?alt=media&token=3088ac7b-fa63-4f05-a60a-eca28682c9ff';
+  }
+
   render() {
     let infos = this.state.infos;
     let showOrHideFeedback = this.showOrHideFeedback;
@@ -69,31 +86,19 @@ export default class Information extends React.Component {
     if(!this.state.feedbackVisible) {
       return(
         <ScrollView style={styles.container}>
-          <View style={styles.getStartedContainer}>
-            <Text style={styles.infoTitle}> { this.getObjectOfArray(infos, 0).title } </Text>
-          </View>
           <View style={styles.infoImageContainer}>
             <Image
-              source={require('../assets/images/decano.png')}
-              style={styles.infoImage}
+              source={{uri: this.getSponsors()}}
+              style={{width: this.state.imgWidth, height: this.state.imgHeight}}
             />
-          </View>
-          <View style={styles.getStartedContainer}>
-            <Text style={styles.infoBody}> { this.getObjectOfArray(infos, 0).body } </Text>
-          </View>
-          <View style={styles.feedbackButtonContainer}>
-            <Button full style={{backgroundColor: colors.light}} onPress={() => this.showOrHideFeedback()} >
-              <Text>
-                comentarios y sugerencias
-              </Text>
-            </Button>
           </View>
         </ScrollView>
       );
     } else {
       return(
-        <Feedback showOrHideFeedback={this.showOrHideFeedback.bind(this)}
-                  loggedUser={this.props.screenProps.loggedUser} />
+        <Feedback
+          showOrHideFeedback={this.showOrHideFeedback.bind(this)}
+          loggedUser={this.props.screenProps.loggedUser} />
       )
     }
   }
@@ -101,11 +106,8 @@ export default class Information extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     paddingTop: 0,
     backgroundColor: colors.dark,
-    paddingLeft: 10,
-    paddingRight: 10,
   },
   feedbackText: {
     fontSize: 30,
@@ -123,30 +125,6 @@ const styles = StyleSheet.create({
   infoImageContainer: {
     justifyContent:'center',
     alignItems:'center',
-    margin: 10,
-  },
-  infoImage: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-  },
-  infoBody: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  getStartedContainer: {
-    flex: 1,
-    justifyContent:'center',
-    alignItems:'center',
-  },
-  feedbackButtonContainer: {
-    flex: 1,
-    justifyContent:'center',
-    alignItems:'center',
-    marginTop: 30,
-    marginBottom: 20,
   },
   feedbackButton: {
     color: colors.light,
